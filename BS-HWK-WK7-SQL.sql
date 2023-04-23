@@ -182,10 +182,28 @@ WHERE od.ProductID = NULL
 ----------------------------------------------------------------------------------------
 
 -- 列出所有在每個月月底的訂單
+-- EOMONTH(o.OrderDate) 每月最後一天
+SELECT
+*
+FROM Orders o
+WHERE o.OrderDate =  EOMONTH(o.OrderDate)
 
 -- 列出每個月月底售出的產品
 
+SELECT DISTINCT
+	p.ProductID, p.ProductName
+FROM [Order Details] od
+INNER JOIN Products p ON od.ProductID = p.ProductID
+WHERE od.OrderID IN (
+	SELECT
+	o.OrderID
+	FROM Orders o
+	WHERE o.OrderDate =  EOMONTH(o.OrderDate)
+)
+
 -- 找出有敗過最貴的三個產品中的任何一個的前三個大客戶
+
+
 
 -- 找出有敗過銷售金額前三高個產品的前三個大客戶
 
