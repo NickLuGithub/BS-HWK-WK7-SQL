@@ -203,9 +203,22 @@ WHERE od.OrderID IN (
 
 -- 找出有敗過最貴的三個產品中的任何一個的前三個大客戶
 
+SELECT TOP 3
+	p.ProductID, p.ProductName, p.UnitPrice
+FROM Products p
+ORDER BY p.UnitPrice DESC
 
+SELECT 
+	o.CustomerID,
+	SUM(od.UnitPrice) AS TotalPrice
+FROM Orders o
+INNER JOIN [Order Details] od ON o.OrderID = od.OrderID
+GROUP BY o.CustomerID
+ORDER BY o.CustomerID
 
 -- 找出有敗過銷售金額前三高個產品的前三個大客戶
+
+
 
 -- 找出有敗過銷售金額前三高個產品所屬類別的前三個大客戶
 
